@@ -92,3 +92,7 @@ It calls two private window-server functions: one so cursor changes are honored 
 | `Settings.swift` | Preferences and the settings window |
 
 The app icon is `Assets/icon.svg`; after editing it, run `swift scripts/make-icon.swift` to regenerate `Assets/Floaty.icns`.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
