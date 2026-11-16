@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>Floaty</title>
+  <!-- macOS icon grid: 1024 canvas, 824 rounded-square plate inset by 100 -->
+  <rect id="plate" x="100" y="100" width="824" height="824" rx="186" fill="#3d5873"/>
+  <!-- the selection: a tinted area with a solid outline -->
+  <rect id="selection-fill" x="302" y="342" width="420" height="340" fill="#ffffff" fill-opacity="0.14"/>
+  <rect id="selection-outline" x="302" y="342" width="420" height="340" fill="none" stroke="#ffffff" stroke-width="16"/>
+  <!-- four corner handles -->
+  <g id="handles" fill="#ffffff">
+    <rect x="270" y="310" width="64" height="64" rx="12"/>
+    <rect x="690" y="310" width="64" height="64" rx="12"/>
+    <rect x="270" y="650" width="64" height="64" rx="12"/>
+    <rect x="690" y="650" width="64" height="64" rx="12"/>
+  </g>
+</svg>
