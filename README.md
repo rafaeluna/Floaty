@@ -2,23 +2,56 @@
 
 # Floaty
 
-A macOS screenshot tool that pins what you capture on top of everything else, right where you took it, and lets you annotate it in place.
+**Screenshots that stay on screen.** Floaty is a small macOS menu bar app: press a shortcut, drag a region, and the capture floats above all your other windows, exactly where you took it. Keep it there as a reference, mark it up, then copy it or drag it wherever it needs to go.
 
-Press a shortcut, drag a region like the built-in screenshot tool, and the capture stays floating above your other apps. Move it, resize it, mark it up, copy it, or drag it into another app.
+It is built for the moments the built-in tool handles poorly: comparing a design against your build, keeping an error message visible while you fix it, or pointing at something with an arrow before sending it to a teammate.
 
-## Features
+## What it does
 
-- **Native-feeling capture.** Crosshair selection with a live size label; hold Space to move the selection, Esc to cancel.
-- **Floats.** Each capture appears pixel-exact over the area it came from and stays above all windows, on every Space. Floats never take focus from the app you are working in.
-- **Resize and scale.** Drag edges or corners (proportional by default, Shift to stretch, Option to resize from the center), pinch, or Cmd-scroll.
-- **Annotation.** Arrows and lines that can be curved, rectangles, ellipses, text in five styles, pen, highlighter, pixelate, numbered steps, spotlight, and crop. Every mark stays editable and the original image is never modified.
-- **Opacity.** Make a float see-through to overlay it on something else.
-- **Output.** Copy the image or its file path, drag the file into another app, share it, or save a copy as PNG or JPEG.
-- **History.** Every capture is saved to `~/Pictures/Floaty` and pruned after 30 days (configurable).
+### Capture that feels native
+- Press **⇧⌘2** and drag, just like the built-in screenshot tool: same crosshair, live size readout, and Space to reposition the selection.
+- The capture appears pixel-for-pixel over the spot it came from, with a short lift animation.
+
+### Floats that stay out of your way
+- Floats sit above every window, on every Space, including over full-screen apps.
+- They never steal focus. Your typing keeps going to the app you were in until you click a float.
+- Keep as many on screen as you like. The focused one lifts on a deeper shadow.
+- Hide or bring back all of them with one shortcut.
+
+### Move, resize, see through
+- Drag to move. Drag any edge or corner to resize in proportion; hold Shift to stretch or Option to resize from the center.
+- Pinch or Cmd-scroll to scale. Press **0** to snap back to original size.
+- Press **O** for an opacity slider, handy for overlaying a mockup on the real thing.
+- Optional: floats turn slightly see-through, with a blur behind them, while you drag.
+
+### Annotate in place
+Press a tool key on a float and start drawing. No separate editor window.
+
+- Arrows and lines, which you can bend into curves
+- Rectangles and ellipses, outlined, tinted, or filled
+- Text in five styles: plain, drop shadow, outline, and two kinds of label
+- Freehand pen and highlighter
+- Pixelate to hide sensitive details
+- Numbered steps that count up as you click
+- Spotlight to dim everything except what matters
+- Crop
+
+Every mark stays editable: select it later to move, restyle, or delete it. Each tool remembers the color and size you last used with it, and everything can be undone. The original screenshot is never altered.
+
+<img src="Assets/annotation-sample.png" width="620" alt="Sample of Floaty's annotation styles: arrows, shapes, text, highlighter, pixelate, numbered steps, and spotlight">
+
+### Get it where it needs to go
+- **⌘C** copies the image, annotations included, at full Retina resolution.
+- **⌥⌘C** copies the file path.
+- Drag the file handle on a float straight into Slack, Mail, Finder, or an upload field, or click it to share.
+- **⇧⌘S** saves a copy as PNG or JPEG.
+
+### Nothing gets lost
+Every capture is saved automatically to `~/Pictures/Floaty`. Closing a float only puts it away. Old captures are cleaned up after 30 days, or whatever period you choose.
 
 ## Shortcuts
 
-Global:
+Anywhere:
 
 | Shortcut | Action |
 |---|---|
@@ -29,69 +62,64 @@ On a focused float:
 
 | Shortcut | Action |
 |---|---|
-| ⌘C | Copy image (with annotations) |
+| ⌘C | Copy image |
 | ⌥⌘C | Copy file path |
-| ⌘S / ⇧⌘S | Save / Save As |
-| O | Opacity slider |
+| ⇧⌘S | Save a copy |
+| O | Opacity |
 | 0 | Original size |
-| U or ⌘Z / ⇧U or ⇧⌘Z | Undo / redo |
+| U or ⌘Z | Undo (add Shift to redo) |
 | ⌘, | Settings |
-| Esc or ⌘W | Close (the capture stays in history) |
+| Esc | Close the float |
 
-Annotation tools (each key opens the toolbar on that tool):
+Annotation tools:
 
 | Key | Tool | Key | Tool |
 |---|---|---|---|
-| V | Select | P | Pen |
-| A | Arrow | H | Highlighter |
-| L | Line | B | Pixelate |
-| R | Rectangle | N | Numbered step |
-| E | Ellipse | S | Spotlight |
-| T | Text | C | Crop |
+| A | Arrow | P | Pen |
+| L | Line | H | Highlighter |
+| R | Rectangle | B | Pixelate |
+| E | Ellipse | N | Numbered step |
+| T | Text | S | Spotlight |
+| V | Select and move | C | Crop |
 
-While annotating: `1`–`8` pick a color, `[` and `]` change size, Shift constrains to 45° or squares, Delete removes the selected mark, and Esc steps back (tool → Select → deselect → close toolbar).
+While annotating, `1`–`8` pick a color, `[` and `]` change size, Shift keeps lines at 45° and shapes square, and Delete removes the selected mark. Hover any toolbar button to see its name and key.
 
-## Requirements
+## Install
 
-- macOS 15.2 or later
-- Xcode command line tools with Swift 6
-
-## Build
+There is no download yet; you build it yourself, which takes about a minute. You need macOS 15.2 or later and Xcode's command line tools (`xcode-select --install`).
 
 ```sh
-./scripts/setup-signing.sh   # once: creates a local self-signed certificate
-./build.sh                   # builds build/Floaty.app, signs it, and launches it
+git clone https://github.com/rafaeluna/Floaty.git
+cd Floaty
+./scripts/setup-signing.sh   # one time
+./build.sh
 ```
 
-The signing step is optional but recommended. macOS ties the Screen Recording permission to an app's signature, and an unsigned build would lose that permission every time it is rebuilt. Without the certificate, `build.sh` falls back to an ad-hoc signature.
+`build.sh` builds `build/Floaty.app` and launches it. Look for the viewfinder icon in your menu bar. To keep it around, copy `Floaty.app` into your Applications folder and turn on "Open Floaty at login" in its settings.
+
+The one-time signing step creates a local certificate so macOS remembers the permissions you grant. Without it, you would have to re-approve screen recording after every rebuild.
 
 ## Permissions
 
-- **Screen Recording** — required to capture the screen.
-- **Accessibility** — optional; enables pinch-to-resize on floats.
-- **Pictures folder** — to save captures to `~/Pictures/Floaty`.
+macOS will ask for these the first time they are needed:
 
-## Notes
-
-Floaty is an AppKit app with no dependencies. It uses ScreenCaptureKit for capture and Carbon hot keys for global shortcuts.
-
-It calls two private window-server functions: one so cursor changes are honored while Floaty is in the background, and one for the blur behind a float while dragging. Both are looked up at runtime and skipped if unavailable, but they rule out the Mac App Store.
-
-## Project layout
-
-| File | Purpose |
+| Permission | Why |
 |---|---|
-| `AppDelegate.swift` | Menu bar item, hot keys, capture flow |
-| `SelectionOverlay.swift` | Crosshair region selection |
-| `ScreenCapturer.swift` | ScreenCaptureKit capture |
-| `FloatWindow.swift` | The floating panel, its shadow, resize, opacity, undo |
-| `Annotation.swift` | Annotation model and renderer |
-| `AnnotationEditor.swift` | Mouse interaction and text editing |
-| `AnnotationToolbar.swift` | Toolbar, buttons, hover labels |
-| `HistoryStore.swift` | Saving and pruning captures |
-| `Settings.swift` | Preferences and the settings window |
+| Screen Recording | Required. This is how any app captures the screen. |
+| Pictures folder | To save your captures. You can choose a different folder in settings. |
+| Accessibility | Optional. Only used so pinch-to-resize works on floats. |
 
-The app icon is `Assets/icon.svg`; after editing it, run `swift scripts/make-icon.swift` to regenerate `Assets/Floaty.icns`.
+Floaty has no network code. Nothing you capture leaves your Mac unless you send it somewhere.
+
+## Good to know
+
+- Floaty has no Dock icon. It lives in the menu bar, and its settings open with ⌘, on a focused float or from the menu bar icon.
+- It relies on two unofficial macOS calls (for cursor handling and the drag blur), so it is not suited to the Mac App Store.
+- Still to come: window and full-screen capture, copying text out of an image, a visual history browser, and customizable shortcuts.
+
+## Contributing
+
+Issues and pull requests are welcome. If you work on the code with an AI coding agent, point it at [AGENTS.md](AGENTS.md), which describes how the project is put together and the pitfalls already found.
 
 ## License
 
